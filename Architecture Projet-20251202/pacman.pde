@@ -20,7 +20,11 @@ void draw() {
 }
 
 void keyPressed() {
-  game.handleKey(key);
+  if (key == CODED) {
+    game.handleKey(keyCode);
+  } else {
+    game.handleKey(key);
+  }
 }
 
 void mousePressed() {

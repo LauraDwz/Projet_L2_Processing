@@ -38,7 +38,15 @@ class Game
         _score += SCORE_SUPER_DOT;
       }
       
-      PVector nextCell = _hero.nextCell();
+      if (_hero._waitingDirection != null) {
+        PVector nextCellWaiting = _hero.nextCellWaiting();
+        if (movePossible(nextCellWaiting)) {
+          _hero.changeDirection();
+        }
+      }
+      
+      
+      PVector nextCell = _hero.nextCellDirection();
       if (movePossible(nextCell)) {
         _hero.move();
       }
@@ -63,14 +71,14 @@ class Game
     _hero.drawIt();
   }
   
-  void handleKey(int k) { // VERIFIER ICI SI LE DEPLACEMENT EST POSSIBLE
-    if (k=='Z' || k=='z') {
+  void handleKey(int k) {
+    if (k=='Z' || k=='z' || k == UP) {
       _hero.launchMove(new PVector(0, -1));
-    } else if (k=='Q' || k=='q') {
+    } else if (k=='Q' || k=='q' || k == LEFT) {
       _hero.launchMove(new PVector(-1, 0));
-    } else if (k=='S' || k=='s') {
+    } else if (k=='S' || k=='s' || k == DOWN) {
       _hero.launchMove(new PVector(0, 1));
-    } else if (k=='D' || k == 'd') {
+    } else if (k=='D' || k == 'd' || k == RIGHT) {
       _hero.launchMove(new PVector(1, 0));
     }
       

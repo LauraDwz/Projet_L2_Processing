@@ -10,6 +10,7 @@ class Hero {
   
   // move data
   PVector _direction;
+  PVector _waitingDirection;
   boolean _moving; // is moving ? 
   float _speed;
   
@@ -35,6 +36,7 @@ class Hero {
     _imgNoDirection = sprites.get(SPRITE_HERO_X, Y_HERO_NODIRECTION, SPRITE_HERO_SIZE, SPRITE_HERO_SIZE);
   
     _direction = new PVector(0, 0);
+    _waitingDirection = null;
     _moving = false;   
     _speed = 2;
   }
@@ -49,7 +51,7 @@ class Hero {
   
   
   void launchMove(PVector dir) {
-    _direction = dir;
+    _waitingDirection = dir;
   }
   
   void move() {
@@ -80,12 +82,16 @@ class Hero {
   void update() {      
   }
   
+  void changeDirection() {
+    _direction = _waitingDirection;
+    _waitingDirection = null;
+  }
   
   PVector currentCell() {
     return new PVector(_cellX, _cellY);
   }
   
-  PVector nextCell() {
+  PVector nextCellDirection() {
     float x = _cellX + _direction.x; 
     float y = _cellY + _direction.y;
     if (x == BOARD_WIDTH) {
@@ -101,6 +107,22 @@ class Hero {
     return new PVector(x, y);
   }
   
+  PVector nextCellWaiting() {
+    float x = _cellX + _waitingDirection.x; 
+    float y = _cellY + _waitingDirection.y;
+    if (x == BOARD_WIDTH) {
+      x = 0;
+    } else if (x == -1 ) {
+      x = BOARD_WIDTH -1;
+    }
+    if (y == BOARD_HEIGHT) {
+      y = 0;
+    } else if (y == -1 ) {
+      y = BOARD_HEIGHT -1;
+    }
+    return new PVector(x, y);
+  }
+    
   void drawIt() {
     imageMode(CENTER);
     if (_direction.equals(new PVector(0, 1))) { //il va en bas
