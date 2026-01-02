@@ -8,8 +8,8 @@ class Game
   int _score;
   int _nbLife;
   
-  Game(int levelWidth, int levelHeight) {
-    _board = new Board(levelWidth, levelHeight, CELL_SIZE);
+  Game() {
+    _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE);
     _hero = new Hero(11, 16, CELL_SIZE*0.8);
     _levelName = "Level 1";
     _score = 0;

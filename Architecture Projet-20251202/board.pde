@@ -48,6 +48,18 @@ class Board
     return (_cells[int(cell.y)][int(cell.x)] == TypeCell.WALL);
   }
   
+  boolean isDot(PVector cell) {
+    return (_cells[int(cell.y)][int(cell.x)] == TypeCell.DOT);
+  }
+  
+  boolean isSuperDot(PVector cell) {
+    return (_cells[int(cell.y)][int(cell.x)] == TypeCell.SUPER_DOT);
+  }
+  
+  void takeDot(PVector cell) {
+    _cells[int(cell.y)][int(cell.x)] = TypeCell.EMPTY;
+  }
+  
   void drawIt() {
     background(0);
     for (int y = 0; y<_cells.length; y++) {

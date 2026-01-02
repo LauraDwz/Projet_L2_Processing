@@ -53,17 +53,47 @@ class Hero {
   }
   
   void move() {
+    boolean cross = false; //est ce que pacman traverse pour aller de l'autre coté
     _cellX += _direction.x;
+    if (_cellX == BOARD_WIDTH) {
+      _cellX = 0;
+      cross = true;
+    } else if (_cellX == -1) {
+      _cellX = BOARD_WIDTH -1;
+      cross = true;
+    }
     _cellY += _direction.y;
+    if (_cellY == BOARD_HEIGHT) {
+      _cellY = 0;
+      cross = true;
+    } else if (_cellY == -1) {
+      _cellY = BOARD_HEIGHT -1;
+      cross = true;
+    }
     _position = setPosition();
     _posOffset = setPositionOffset();
+    if (cross) {
+      _realPosition = _posOffset.copy();
+    }
   }
   
   void update() {      
   }
   
   PVector nextCell() {
-    return new PVector(_cellX + _direction.x, _cellY + _direction.y);
+    float x = _cellX + _direction.x; 
+    float y = _cellY + _direction.y;
+    if (x == BOARD_WIDTH) {
+      x = 0;
+    } else if (x == -1 ) {
+      x = BOARD_WIDTH -1;
+    }
+    if (y == BOARD_HEIGHT) {
+      y = 0;
+    } else if (y == -1 ) {
+      y = BOARD_HEIGHT -1;
+    }
+    return new PVector(x, y);
   }
   
   void drawIt() {
