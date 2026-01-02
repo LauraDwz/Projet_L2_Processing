@@ -5,8 +5,8 @@ final int BOARD_HEIGHT = 22;
 final int BOARD_WIDTH = 23 ;
 
 
-final int SCORE_DOT = 10;
-final int SCORE_SUPER_DOT = 50;
+final int SCORE_DOT = 20;
+final int SCORE_SUPER_DOT = 200;
 
 final int SPRITE_HERO_SIZE = 40; //ils sont carrés
 final int SPRITE_HERO_X = 850; //ils sont tous sur la même colonne

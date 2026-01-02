@@ -28,7 +28,16 @@ class Game
         _hero._realPosition.y += _hero._speed;
       }
     }
-    else {
+    else { //Il est arrivé à sa case
+      PVector heroCell = _hero.currentCell();
+      if (_board.isDot(heroCell)) {
+        _board.takeDot(heroCell);
+        _score += SCORE_DOT;
+      } else if (_board.isSuperDot(heroCell)) {
+        _board.takeDot(heroCell);
+        _score += SCORE_SUPER_DOT;
+      }
+      
       PVector nextCell = _hero.nextCell();
       if (movePossible(nextCell)) {
         _hero.move();

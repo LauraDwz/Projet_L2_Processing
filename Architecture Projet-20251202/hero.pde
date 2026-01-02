@@ -80,6 +80,11 @@ class Hero {
   void update() {      
   }
   
+  
+  PVector currentCell() {
+    return new PVector(_cellX, _cellY);
+  }
+  
   PVector nextCell() {
     float x = _cellX + _direction.x; 
     float y = _cellY + _direction.y;
