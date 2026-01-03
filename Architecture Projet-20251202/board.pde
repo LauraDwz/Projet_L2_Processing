@@ -44,6 +44,7 @@ class Board
     return new PVector((i+0.5)*_cellSize + _position.x, (j+0.5)*_cellSize + _position.y);
   }
   
+  
   boolean isWall(PVector cell) {
     return (_cells[int(cell.y)][int(cell.x)] == TypeCell.WALL);
   }

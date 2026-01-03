@@ -29,11 +29,11 @@ class Hero {
     _posOffset = setPositionOffset();
     _realPosition = _posOffset.copy();
     
-    _imgUp = sprites.get(SPRITE_HERO_X, Y_HERO_UP, SPRITE_HERO_SIZE, SPRITE_HERO_SIZE);
-    _imgDown = sprites.get(SPRITE_HERO_X, Y_HERO_DOWN, SPRITE_HERO_SIZE, SPRITE_HERO_SIZE);
-    _imgLeft = sprites.get(SPRITE_HERO_X, Y_HERO_LEFT, SPRITE_HERO_SIZE, SPRITE_HERO_SIZE);
-    _imgRight = sprites.get(SPRITE_HERO_X, Y_HERO_RIGHT, SPRITE_HERO_SIZE, SPRITE_HERO_SIZE);
-    _imgNoDirection = sprites.get(SPRITE_HERO_X, Y_HERO_NODIRECTION, SPRITE_HERO_SIZE, SPRITE_HERO_SIZE);
+    _imgUp = sprites.get(SPRITE_HERO_X, Y_HERO_UP, SPRITE_SIZE, SPRITE_SIZE);
+    _imgDown = sprites.get(SPRITE_HERO_X, Y_HERO_DOWN, SPRITE_SIZE, SPRITE_SIZE);
+    _imgLeft = sprites.get(SPRITE_HERO_X, Y_HERO_LEFT, SPRITE_SIZE, SPRITE_SIZE);
+    _imgRight = sprites.get(SPRITE_HERO_X, Y_HERO_RIGHT, SPRITE_SIZE, SPRITE_SIZE);
+    _imgNoDirection = sprites.get(SPRITE_HERO_X, Y_HERO_NODIRECTION, SPRITE_SIZE, SPRITE_SIZE);
   
     _direction = new PVector(0, 0);
     _waitingDirection = null;

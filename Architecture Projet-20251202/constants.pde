@@ -8,10 +8,21 @@ final int BOARD_WIDTH = 23 ;
 final int SCORE_DOT = 20;
 final int SCORE_SUPER_DOT = 200;
 
-final int SPRITE_HERO_SIZE = 40; //ils sont carrés
+final int SPRITE_SIZE = 40; //ils sont carrés
+
 final int SPRITE_HERO_X = 850; //ils sont tous sur la même colonne
 final int Y_HERO_RIGHT = 100;
 final int Y_HERO_DOWN = 250;
 final int Y_HERO_LEFT = 400;
 final int Y_HERO_UP = 550;
 final int Y_HERO_NODIRECTION = 0;
+
+final int SPRITE_RED_X = 0;
+final int SPRITE_PINK_X = 50;
+final int SPRITE_BLUE_X = 100;
+final int SPRITE_ORANGE_X = 150;
+
+final int Y_GHOST_RIGHT = 0;
+final int Y_GHOST_DOWN = 100;
+final int Y_GHOST_LEFT = 200;
+final int Y_GHOST_UP = 300;
