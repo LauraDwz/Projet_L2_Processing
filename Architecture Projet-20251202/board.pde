@@ -10,6 +10,8 @@ class Board
   int _nbCellsX;
   int _nbCellsY;
   int _cellSize; // cells should be square
+  int _nbDot;
+  int _nbSuperDot;
   
   Board(int nbCellsX, int nbCellsY, int cellSize) {
     _nbCellsX = nbCellsX;
@@ -17,6 +19,8 @@ class Board
     _cellSize = cellSize;   
     _cells = new TypeCell[_nbCellsY][_nbCellsX];// array of cells
     _position = POSITION_BOARD;
+    _nbDot = 0;
+    _nbSuperDot = 0;
     String levelFile = "levels/level1.txt";
     String[] lines = loadStrings(levelFile);
     for (int j = 1; j<lines.length; j++) { //Je ne prends pas la première ligne qui correspond au titre du niveau
@@ -28,9 +32,11 @@ class Board
             break;
           case 'o': 
             _cells[j-1][i] = TypeCell.DOT;
+            _nbDot ++;
             break;
           case 'O':
             _cells[j-1][i] = TypeCell.SUPER_DOT;
+            _nbSuperDot ++;
             break;
           default:
             _cells[j-1][i] = TypeCell.EMPTY;
@@ -58,6 +64,8 @@ class Board
   }
   
   void takeDot(PVector cell) {
+    if (_cells[int(cell.y)][int(cell.x)] == TypeCell.DOT) _nbDot --;
+    else _nbSuperDot--;
     _cells[int(cell.y)][int(cell.x)] = TypeCell.EMPTY;
   }
   

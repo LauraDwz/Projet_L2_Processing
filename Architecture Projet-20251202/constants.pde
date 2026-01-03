@@ -4,6 +4,8 @@ final PVector POSITION_BOARD = new PVector(0, 100);
 final int BOARD_HEIGHT = 22;
 final int BOARD_WIDTH = 23 ;
 
+final int HERO_X = 11;
+final int HERO_Y = 16;
 
 final int SCORE_DOT = 20;
 final int SCORE_SUPER_DOT = 200;

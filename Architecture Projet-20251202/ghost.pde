@@ -1,5 +1,8 @@
 class Ghost {
   
+  int _initialPosX;
+  int _initialPosY;
+  
   // position on screen
   PVector _position; //position on the board in pixel
   PVector _posOffset; //_position but with the gap
@@ -11,7 +14,6 @@ class Ghost {
   
   // move data
   PVector _direction;
-  boolean _moving; // is moving ? not moving in the beginning of the game
   float _speed;
   
   //hero sprites
@@ -22,6 +24,8 @@ class Ghost {
   PImage _imgNoDirection;
   
   Ghost(int cellX, int cellY, float size, int spriteX) {
+    _initialPosX = cellX;
+    _initialPosY = cellY;
     _cellX = cellX;
     _cellY = cellY; 
     _size = size;
@@ -35,11 +39,20 @@ class Ghost {
     _imgRight = sprites.get(spriteX, Y_GHOST_RIGHT, SPRITE_SIZE, SPRITE_SIZE);
     _imgNoDirection = sprites.get(spriteX, Y_GHOST_RIGHT, SPRITE_SIZE, SPRITE_SIZE); //pas de sprite les yeux au centre
   
-    _direction = new PVector(0, 0);
-    _moving = false;   
+    _direction = new PVector(0, 0); 
     _speed = 2;
   }
   
+  void respawn() {
+    _cellX = _initialPosX;
+    _cellY = _initialPosY;
+    _position = setPosition();
+    _posOffset = setPositionOffset();
+    _realPosition = _posOffset.copy();
+    _direction = new PVector(0, 0);
+  }
+    
+    
   PVector setPosition() {
     return new PVector(_cellX*CELL_SIZE + HALF_CELL, _cellY*CELL_SIZE + HALF_CELL);
   } //renvoie le centre de la cellule ou il est
@@ -72,6 +85,40 @@ class Ghost {
     return PVector.dist(_realPosition, _posOffset) < _speed;
   }
   
+  void chooseDirection(Board board) {
+    ArrayList<PVector> choices = new ArrayList<PVector>();
+
+    PVector[] dirs = {
+      new PVector(1, 0),
+      new PVector(-1, 0),
+      new PVector(0, 1),
+      new PVector(0, -1)
+    };
+
+    for (int i = 0; i < dirs.length; i++) {
+      PVector d = dirs[i];
+      // éviter le demi-tour
+      if (_direction != null && d.x == -_direction.x && d.y == -_direction.y) continue;
+
+      int nx = _cellX + int(d.x);
+      int ny = _cellY + int(d.y);
+
+      PVector next = new PVector(nx, ny);
+      if (!board.isWall(next)) {
+        choices.add(d);
+      }
+    }
+
+    if (choices.size() == 0 && _direction != null) {
+      choices.add(new PVector(-_direction.x, -_direction.y));
+    }
+
+    if (choices.size() > 0) {
+      int r = int(random(choices.size()));
+      _direction = choices.get(r);
+    }
+  }    
+    
   void moveSlowly() {
       if (PVector.dist(_realPosition, _posOffset) < _speed) {
         move();

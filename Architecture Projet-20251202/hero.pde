@@ -11,7 +11,6 @@ class Hero {
   // move data
   PVector _direction;
   PVector _waitingDirection;
-  boolean _moving; // is moving ? 
   float _speed;
   
   //hero sprites
@@ -36,10 +35,19 @@ class Hero {
     _imgNoDirection = sprites.get(SPRITE_HERO_X, Y_HERO_NODIRECTION, SPRITE_SIZE, SPRITE_SIZE);
   
     _direction = new PVector(0, 0);
-    _waitingDirection = null;
-    _moving = false;   
+    _waitingDirection = null; 
     _speed = 2;
   }
+  
+  void respawn() {
+    _cellX = HERO_X;
+    _cellY = HERO_Y;
+    _position = setPosition();
+    _posOffset = setPositionOffset();
+    _realPosition = _posOffset.copy();
+    _direction = new PVector(0, 0);
+    _waitingDirection = null;
+  }  
   
   PVector setPosition() {
     return new PVector(_cellX*CELL_SIZE + HALF_CELL, _cellY*CELL_SIZE + HALF_CELL);
@@ -77,9 +85,6 @@ class Hero {
     if (cross) {
       _realPosition = _posOffset.copy();
     }
-  }
-  
-  void update() {      
   }
   
   void changeDirection() {
