@@ -13,7 +13,7 @@ class Board
   int _nbDot;
   int _nbSuperDot;
   
-  Board(int nbCellsX, int nbCellsY, int cellSize) {
+  Board(int nbCellsX, int nbCellsY, int cellSize, String levelFile) {
     _nbCellsX = nbCellsX;
     _nbCellsY = nbCellsY;
     _cellSize = cellSize;   
@@ -21,7 +21,6 @@ class Board
     _position = POSITION_BOARD;
     _nbDot = 0;
     _nbSuperDot = 0;
-    String levelFile = "levels/level1.txt";
     String[] lines = loadStrings(levelFile);
     for (int j = 1; j<lines.length; j++) { //Je ne prends pas la première ligne qui correspond au titre du niveau
       for (int i = 0; i<lines[j].length(); i++) {

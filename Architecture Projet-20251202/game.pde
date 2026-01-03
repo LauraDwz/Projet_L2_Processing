@@ -7,7 +7,9 @@ class Game
   Ghost _blueGhost;
   Ghost _orangeGhost;
   
+  int _levelNumber;
   String _levelName;
+  String _levelFile;
   
   int _score;
   int _nbLife;
@@ -25,10 +27,13 @@ class Game
   boolean redMove = false;
   boolean orangeOut = false;
   boolean orangeMove = false;
+  boolean _end = false;
       
   Game() {
-    _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE);
+    _levelFile = "levels/level1.txt";
+    _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
     _hero = new Hero(HERO_X, HERO_Y, CELL_SIZE*0.8);
+    _levelNumber = 1;
     _levelName = "Level 1";
     _score = 0;
     _nbLife = 2;
@@ -40,7 +45,22 @@ class Game
     _orangeGhost = new Ghost(13, 10, CELL_SIZE*0.8, SPRITE_ORANGE_X);
   }
   
-  
+  void nextLevel() {
+    if (_levelNumber <= 4) {
+      _levelNumber ++;
+      _levelName = "Level " + _levelNumber;
+      _levelFile = "levels/level" + _levelNumber + ".txt";
+      _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
+      //on garde le même score et le même nb de vies
+      _pinkGhost = new Ghost(10, 10, CELL_SIZE*0.8, SPRITE_PINK_X);
+      _blueGhost = new Ghost(12, 10, CELL_SIZE*0.8, SPRITE_BLUE_X);
+      _redGhost = new Ghost(9, 10, CELL_SIZE*0.8, SPRITE_RED_X);
+      _orangeGhost = new Ghost(13, 10, CELL_SIZE*0.8, SPRITE_ORANGE_X);
+    } else {
+      _end = true;
+    }
+  }
+    
   void respawn () {
     _hero.respawn();
     _pinkGhost.respawn();
@@ -62,6 +82,7 @@ class Game
     
     //remet tout le monde à leur position etc
   }
+  
   void update() {   
     if (_frameCount >= 1) {
       _frameCount ++;
@@ -248,7 +269,7 @@ class Game
       _hero.launchMove(new PVector(0, 1));
     } else if (k=='D' || k == 'd' || k == RIGHT) {
       _hero.launchMove(new PVector(1, 0));
-    }
-      
+    }      
   }
+
 }
