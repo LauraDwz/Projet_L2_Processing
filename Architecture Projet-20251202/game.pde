@@ -13,6 +13,8 @@ class Game
   
   int _score;
   int _nbLife;
+  int _scoreBeginLevel;
+  int _nbLifeBeginLevel;
   
   int _count; //représente le nombre de tours de jeu : combien de fois pacman a changé de case ou eu le temps le faire
   int _frameCount;
@@ -34,13 +36,15 @@ class Game
   boolean _win = false;
       
   Game() {
-    _levelFile = "levels/level4.txt";
+    _levelFile = "levels/level1.txt";
     _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
     _hero = new Hero(HERO_X, HERO_Y, CELL_SIZE*0.8);
     _levelNumber = 1;
-    _levelName = "Level 1";
+    _levelName = loadStrings(_levelFile)[0];
     _score = 0;
+    _scoreBeginLevel = 0;
     _nbLife = 2;
+    _nbLifeBeginLevel = 2;
     _frameCount = 0;
     _count = 0;
     _pinkGhost = new Ghost(10, 10, CELL_SIZE*0.8, SPRITE_PINK_X);
@@ -52,9 +56,16 @@ class Game
   void nextLevel() {
     if (_levelNumber <= 4) {
       _levelNumber ++;
-      _levelName = "Level " + _levelNumber;
       _levelFile = "levels/level" + _levelNumber + ".txt";
+      _levelName = loadStrings(_levelFile)[0];     
       _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
+      
+      _frameCount = 0;
+      _count = 0;
+      
+      _scoreBeginLevel = _score;
+      _nbLifeBeginLevel = _nbLife;
+    
       //on garde le même score et le même nb de vies
       _pinkGhost = new Ghost(10, 10, CELL_SIZE*0.8, SPRITE_PINK_X);
       _blueGhost = new Ghost(12, 10, CELL_SIZE*0.8, SPRITE_BLUE_X);
@@ -64,6 +75,24 @@ class Game
       _end = true;
       _win = true;
     }
+  }
+  
+  void restartLevel() {
+    //reset jeu
+    _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
+    _hero = new Hero(HERO_X, HERO_Y, CELL_SIZE*0.8);
+    _frameCount = 0;
+    _count = 0;
+    
+    _superMode = false;
+    _score = _scoreBeginLevel;
+    _nbLife = _nbLifeBeginLevel;
+    
+    //reset fantomes
+    _pinkGhost = new Ghost(10, 10, CELL_SIZE*0.8, SPRITE_PINK_X);
+    _blueGhost = new Ghost(12, 10, CELL_SIZE*0.8, SPRITE_BLUE_X);
+    _redGhost = new Ghost(9, 10, CELL_SIZE*0.8, SPRITE_RED_X);
+    _orangeGhost = new Ghost(13, 10, CELL_SIZE*0.8, SPRITE_ORANGE_X);
   }
     
   void respawn () {
@@ -84,8 +113,35 @@ class Game
     redMove = false;
     orangeOut = false;
     orangeMove = false;
-    
-    //remet tout le monde à leur position etc
+  }
+  
+  void loadLevel() {
+    _levelFile = "level/saved.txt";
+    _levelName = loadStrings(_levelFile)[0];
+    _levelNumber = int(_levelName.charAt(_levelName.length() -1));
+    _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
+    _hero = new Hero(HERO_X, HERO_Y, CELL_SIZE*0.8);
+    _frameCount = 0;
+    _count = 0;
+    _score = int(loadStrings(_levelFile)[BOARD_HEIGHT + 2]);
+    _nbLife = int(loadStrings(_levelFile)[BOARD_HEIGHT + 1]);
+    _superMode = false;
+    _pinkGhost = new Ghost(10, 10, CELL_SIZE*0.8, SPRITE_PINK_X);
+    _blueGhost = new Ghost(12, 10, CELL_SIZE*0.8, SPRITE_BLUE_X);
+    _redGhost = new Ghost(9, 10, CELL_SIZE*0.8, SPRITE_RED_X);
+    _orangeGhost = new Ghost(13, 10, CELL_SIZE*0.8, SPRITE_ORANGE_X);
+  }
+  
+  void saveLevel() {
+    String[] level = new String[BOARD_HEIGHT + 1 + 2];
+    level[0] = _levelName;
+    level[BOARD_HEIGHT + 1] = ""+_nbLife;
+    level[BOARD_HEIGHT+ 2] = ""+_score;
+    String[] board = _board.save();
+    for (int i = 1; i<BOARD_HEIGHT + 1; i++) {
+      level[i] = board[i-1]; //le passage par référence n'est pas un soucis car on peut pas la modif
+    }
+    saveStrings("level/saved.txt", level);
   }
   
   void update() {   

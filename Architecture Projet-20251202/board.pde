@@ -22,7 +22,7 @@ class Board
     _nbDot = 0;
     _nbSuperDot = 0;
     String[] lines = loadStrings(levelFile);
-    for (int j = 1; j<lines.length; j++) { //Je ne prends pas la première ligne qui correspond au titre du niveau
+    for (int j = 1; j<BOARD_HEIGHT +1; j++) { //Je ne prends pas la première ligne qui correspond au titre du niveau
       for (int i = 0; i<lines[j].length(); i++) {
         char CellType = lines[j].charAt(i);
         switch (CellType) {
@@ -43,6 +43,25 @@ class Board
         }
       }
     }
+  }
+  String[] save() {
+    String[] board = new String[BOARD_HEIGHT];
+    for (int i = 0; i<BOARD_HEIGHT; i++) {
+      String line = "";
+      for (int j = 0; j<BOARD_WIDTH; j++) {
+        char c = 'V';
+        if (_cells[i][j] == TypeCell.WALL) {
+          c = 'x';
+        } else if (_cells[i][j] == TypeCell.DOT) {
+          c = 'o';
+        } else if (_cells[i][j] == TypeCell.SUPER_DOT) {
+          c = 'O';
+        }
+        line += c;
+      }
+      board[i] = line;
+    }
+    return board;
   }
   
   PVector getCellCenter(int i, int j) {

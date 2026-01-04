@@ -1,0 +1,25 @@
+﻿Level 1
+xxxxxxxxxxxxxxxxxxxxxxx
+xooooooooooxoooooooooox
+xOxxxoxxxxoxoxxxxoxxxOx
+xoxxxoxxxxoxoxxxxoxxxox
+xooooooooooooooooooooox
+xoxxxoxoxxxxxxxoxoxxxox
+xoooooxooooxooooxooooox
+xxxxxoxxxxoxoxxxxoxxxxx
+VVVVxoxoooooooooxoxVVVV
+xxxxxoxoxxxVxxxoxoxxxxx
+ooooooooxVVVVVxoooooooo
+xxxxxoxoxxxxxxxoxoxxxxx
+VVVVxoooooooooooooxVVVV
+xxxxxoxoxxxxxxxoxoxxxxx
+xooooooooooxoooooooooox
+xoxxxoxxxxoxoxxxxoxxxox
+xOooxooooooVVVVVVVxooOx
+xxxoxoxoxxxxxxxoxVxoxxx
+xoooooxooooxooooxVVVVVx
+xoxxxxxxxxoxoxxxxxxxxox
+xooooooooooooooooooooox
+xxxxxxxxxxxxxxxxxxxxxxx
+2
+240
