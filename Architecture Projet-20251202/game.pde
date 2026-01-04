@@ -53,12 +53,23 @@ class Game
     _orangeGhost = new Ghost(13, 10, CELL_SIZE*0.8, SPRITE_ORANGE_X);
   }
   
+  void drawNextLevelScreen() {
+    background(0);
+    fill(255, 255, 0);
+    textFont(f, 50);
+    textAlign(CENTER, CENTER);
+    text("Next Level", width/2, height/2);
+}
+  
   void nextLevel() {
-    if (_levelNumber <= 4) {
+    print("ici");
+    if (_levelNumber <= 4) {      
       _levelNumber ++;
       _levelFile = "levels/level" + _levelNumber + ".txt";
       _levelName = loadStrings(_levelFile)[0];     
       _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
+      _hero = new Hero(HERO_X, HERO_Y, CELL_SIZE*0.8);
+      _superMode = false;
       
       _frameCount = 0;
       _count = 0;
@@ -71,6 +82,15 @@ class Game
       _blueGhost = new Ghost(12, 10, CELL_SIZE*0.8, SPRITE_BLUE_X);
       _redGhost = new Ghost(9, 10, CELL_SIZE*0.8, SPRITE_RED_X);
       _orangeGhost = new Ghost(13, 10, CELL_SIZE*0.8, SPRITE_ORANGE_X);
+      
+      pinkOut = false;
+      pinkMove = false;
+      blueOut = false;
+      blueMove = false;
+      redOut = false;
+      redMove = false;
+      orangeOut = false;
+      orangeMove = false;
     } else {
       _end = true;
       _win = true;
@@ -81,6 +101,7 @@ class Game
     //reset jeu
     _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
     _hero = new Hero(HERO_X, HERO_Y, CELL_SIZE*0.8);
+    
     _frameCount = 0;
     _count = 0;
     
@@ -93,6 +114,15 @@ class Game
     _blueGhost = new Ghost(12, 10, CELL_SIZE*0.8, SPRITE_BLUE_X);
     _redGhost = new Ghost(9, 10, CELL_SIZE*0.8, SPRITE_RED_X);
     _orangeGhost = new Ghost(13, 10, CELL_SIZE*0.8, SPRITE_ORANGE_X);
+    
+    pinkOut = false;
+    pinkMove = false;
+    blueOut = false;
+    blueMove = false;
+    redOut = false;
+    redMove = false;
+    orangeOut = false;
+    orangeMove = false;
   }
     
   void respawn () {
@@ -116,7 +146,7 @@ class Game
   }
   
   void loadLevel() {
-    _levelFile = "level/saved.txt";
+    _levelFile = "levels/saved.txt";
     _levelName = loadStrings(_levelFile)[0];
     _levelNumber = int(_levelName.charAt(_levelName.length() -1));
     _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
@@ -141,7 +171,7 @@ class Game
     for (int i = 1; i<BOARD_HEIGHT + 1; i++) {
       level[i] = board[i-1]; //le passage par référence n'est pas un soucis car on peut pas la modif
     }
-    saveStrings("level/saved.txt", level);
+    saveStrings("levels/saved.txt", level);
   }
   
   void update() {   
@@ -179,6 +209,10 @@ class Game
         _score += SCORE_SUPER_DOT;
         if (_score >= 10000 && _score <10000 + SCORE_SUPER_DOT) _nbLife ++; 
         activateSuperMode();
+      } else if (_board.isBonus(heroCell)) {
+        _board.takeDot(heroCell);
+        _score += SCORE_BONUS;
+        if (_score >= 10000 && _score <10000 + SCORE_BONUS) _nbLife ++; 
       }
       
       if (_hero._waitingDirection != null) {
@@ -317,10 +351,9 @@ class Game
        blueMove = false;
      }
      
-   }
-   
+   }   
    // Gestion de fin de partie
-   if (_board._nbDot == 0 && _board._nbSuperDot == 0){
+   if (_board._nbDot <= 200 && _board._nbSuperDot <= 3){ //attention modifié
      print("Gagné");
      nextLevel();
    } else if (_nbLife <= 0) {

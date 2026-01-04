@@ -10,6 +10,7 @@ final int HALF_SPEED = 1;
 final int SCORE_DOT = 20;
 final int SCORE_SUPER_DOT = 50;
 final int SCORE_GHOST = 200;
+final int SCORE_BONUS = 500;
 
 final int SPRITE_SIZE = 40; //ils sont carrés
 

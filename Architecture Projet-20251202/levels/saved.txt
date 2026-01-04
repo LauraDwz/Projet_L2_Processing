@@ -1,0 +1,25 @@
+Level 5
+xxxxxxxoxxxxxxxVxxxxxxx
+xOoooxxoxoxxxoxVxxoooOx
+xoxxooxoxoooooxVxooxxox
+xoxooxxoooxoxooVxxooxox
+xoooxxxoxxxoxxxVxxxooox
+xxoxooxooooooooVxVVxoxx
+xooooxxoxxxoxxxVxxVooox
+xxoxooooooxoxooVVVVxoxx
+xxoxxoxxxooVooxxxoxxoxx
+xxoxxoooxxxVxxxoooxxoxx
+ooooooxoxVVVVVxoxoooooo
+xxoxxoxoxxxxxxxoxoxxoxx
+xxoxooooxxoxoxxooooxoxx
+xooooxxxxooVVVxxxxoooox
+xoxxooooooxVxVVVVVVxxox
+xooooxxoxxxVxxxVxxVVVVx
+xxoxooxooooVVVVVxoVxVxx
+xoooxxxoxxxoxxxVxxxVVVx
+xoxooxxoooxoxooVxxVVxox
+xoxxooxoxoooooxVxVVxxox
+xOoooxxoxoxxxoxVxxVooOx
+xxxxxxxoxxxxxxxVxxxxxxx
+1
+4240

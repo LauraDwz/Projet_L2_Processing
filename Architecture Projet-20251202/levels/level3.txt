@@ -7,7 +7,7 @@ ooooxxoxxoooooxxoxxoooo
 xoxoxxoxooxxxooxoxxoxox
 xoxoooOxxoxxxoxxOoooxox
 xoxxxxoxoooxoooxoxxxxox
-xooooooooxoooxoooooooox
+xooooooooxoBoxoooooooox
 xoxoxoxoxxxVxxxoxoxoxox
 xoxoxoxoxVVVVVxoxoxoxox
 xoxoxoxoxxxxxxxoxoxoxox

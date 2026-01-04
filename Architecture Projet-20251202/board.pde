@@ -1,6 +1,6 @@
 enum TypeCell 
 {
-  EMPTY, WALL, DOT, SUPER_DOT
+  EMPTY, WALL, DOT, SUPER_DOT, BONUS
 }
 
 class Board 
@@ -13,6 +13,8 @@ class Board
   int _nbDot;
   int _nbSuperDot;
   
+  PImage _spriteBonus;
+  
   Board(int nbCellsX, int nbCellsY, int cellSize, String levelFile) {
     _nbCellsX = nbCellsX;
     _nbCellsY = nbCellsY;
@@ -21,6 +23,7 @@ class Board
     _position = POSITION_BOARD;
     _nbDot = 0;
     _nbSuperDot = 0;
+    _spriteBonus = sprites.get(600, 0, SPRITE_SIZE, SPRITE_SIZE);
     String[] lines = loadStrings(levelFile);
     for (int j = 1; j<BOARD_HEIGHT +1; j++) { //Je ne prends pas la première ligne qui correspond au titre du niveau
       for (int i = 0; i<lines[j].length(); i++) {
@@ -36,6 +39,9 @@ class Board
           case 'O':
             _cells[j-1][i] = TypeCell.SUPER_DOT;
             _nbSuperDot ++;
+            break;
+          case 'B':
+            _cells[j-1][i] = TypeCell.BONUS;
             break;
           default:
             _cells[j-1][i] = TypeCell.EMPTY;
@@ -81,9 +87,13 @@ class Board
     return (_cells[int(cell.y)][int(cell.x)] == TypeCell.SUPER_DOT);
   }
   
-  void takeDot(PVector cell) {
+  boolean isBonus(PVector cell) {
+    return (_cells[int(cell.y)][int(cell.x)] == TypeCell.BONUS);
+  }
+  
+  void takeDot(PVector cell) {    
     if (_cells[int(cell.y)][int(cell.x)] == TypeCell.DOT) _nbDot --;
-    else _nbSuperDot--;
+    else if (_cells[int(cell.y)][int(cell.x)] == TypeCell.SUPER_DOT) _nbSuperDot--; //Peut etre bonus aussi
     _cells[int(cell.y)][int(cell.x)] = TypeCell.EMPTY;
   }
   
@@ -142,7 +152,10 @@ class Board
           noStroke();
           fill(color(255, 255, 0));
           circle(cellCenter.x, cellCenter.y, _cellSize/2);
-        }       
+        }  else if (cell == TypeCell.BONUS){
+          imageMode(CENTER);
+          image(_spriteBonus, cellCenter.x, cellCenter.y, 0.8*CELL_SIZE, 0.8*CELL_SIZE);
+        }      
       }
     }
   }
