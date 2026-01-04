@@ -40,7 +40,7 @@ class Ghost {
     _imgNoDirection = sprites.get(spriteX, Y_GHOST_RIGHT, SPRITE_SIZE, SPRITE_SIZE); //pas de sprite les yeux au centre
   
     _direction = new PVector(0, 0); 
-    _speed = 2;
+    _speed = SPEED;
   }
   
   void respawn() {

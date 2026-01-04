@@ -36,7 +36,7 @@ class Hero {
   
     _direction = new PVector(0, 0);
     _waitingDirection = null; 
-    _speed = 2;
+    _speed = SPEED;
   }
   
   void respawn() {

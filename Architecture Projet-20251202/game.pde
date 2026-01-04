@@ -18,6 +18,8 @@ class Game
   int _frameCount;
   
   boolean _superMode = false;
+  int _superModeUntil;
+  int _ghostEaten;
   
   boolean pinkOut = false;
   boolean pinkMove = false;
@@ -27,10 +29,12 @@ class Game
   boolean redMove = false;
   boolean orangeOut = false;
   boolean orangeMove = false;
+  
   boolean _end = false;
+  boolean _win = false;
       
   Game() {
-    _levelFile = "levels/level1.txt";
+    _levelFile = "levels/level4.txt";
     _board = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE, _levelFile);
     _hero = new Hero(HERO_X, HERO_Y, CELL_SIZE*0.8);
     _levelNumber = 1;
@@ -58,6 +62,7 @@ class Game
       _orangeGhost = new Ghost(13, 10, CELL_SIZE*0.8, SPRITE_ORANGE_X);
     } else {
       _end = true;
+      _win = true;
     }
   }
     
@@ -88,6 +93,12 @@ class Game
       _frameCount ++;
       if (_frameCount %10 == 0) _count ++;
     }
+    
+    if (_superMode) {
+      if (_count >= _superModeUntil) {
+        desactivateSuperMode();
+      }
+    }
     //Gestion du héros
     //Avancée progressive
     if ( !(_hero._realPosition.equals(_hero._posOffset)) ) {
@@ -111,6 +122,7 @@ class Game
         _board.takeDot(heroCell);
         _score += SCORE_SUPER_DOT;
         if (_score >= 10000 && _score <10000 + SCORE_SUPER_DOT) _nbLife ++; 
+        activateSuperMode();
       }
       
       if (_hero._waitingDirection != null) {
@@ -222,20 +234,70 @@ class Game
        _nbLife -= 1;
        respawn();
      }
+   } else { //On est en superMode
+     if (_hero._cellX == _redGhost._cellX && _hero._cellY == _redGhost._cellY) {
+       _ghostEaten += 1;
+       _score += _ghostEaten*SCORE_GHOST;
+       _redGhost.respawn();
+       redOut = false;
+       redMove = false;
+     } else if (_hero._cellX == _pinkGhost._cellX && _hero._cellY == _pinkGhost._cellY) {
+       _ghostEaten += 1;
+       _score += _ghostEaten*SCORE_GHOST;
+       _pinkGhost.respawn();
+       pinkOut = false;
+       pinkMove = false;
+     } else if (_hero._cellX == _orangeGhost._cellX && _hero._cellY == _orangeGhost._cellY) {
+       _ghostEaten += 1;
+       _score += _ghostEaten*SCORE_GHOST;
+       _orangeGhost.respawn();
+       orangeOut = false;
+       orangeMove = false;
+     } else if (_hero._cellX == _blueGhost._cellX && _hero._cellY == _blueGhost._cellY) {
+       _ghostEaten += 1;
+       _score += _ghostEaten*SCORE_GHOST;
+       _blueGhost.respawn();
+       blueOut = false;
+       blueMove = false;
+     }
+     
    }
-   println(_nbLife);
    
    // Gestion de fin de partie
    if (_board._nbDot == 0 && _board._nbSuperDot == 0){
      print("Gagné");
-     //LANCER LE PROCHAIN LEVEL ETC
-     exit();
+     nextLevel();
    } else if (_nbLife <= 0) {
      print("Perdu"); 
-     //Faire la sortie
-     exit();
+     _end = true;    
    }
  }
+  
+  boolean isFinished() {
+    return _end;
+  }
+  boolean isWin() {
+    return _win;
+  }
+  
+  void activateSuperMode() {
+    _superMode = true;
+    _superModeUntil = _count + 100;
+    _ghostEaten = 0;
+    _redGhost._speed = HALF_SPEED;
+    _orangeGhost._speed = HALF_SPEED;
+    _blueGhost._speed = HALF_SPEED;
+    _pinkGhost._speed = HALF_SPEED;
+  }
+  
+  void desactivateSuperMode() {
+    _superMode = false;
+    _superModeUntil = _count + 100;
+    _redGhost._speed = SPEED;
+    _orangeGhost._speed = SPEED;
+    _blueGhost._speed = SPEED;
+    _pinkGhost._speed = SPEED;
+  }
   
   boolean movePossible(PVector cell) {
     return !(_board.isWall(cell));
@@ -257,6 +319,13 @@ class Game
     _pinkGhost.drawIt();
     _blueGhost.drawIt();
     _orangeGhost.drawIt();
+    
+    if (_superMode) {
+      noStroke();
+      fill(0, 0, 120, 80);
+      rectMode(CORNER);
+      rect(0, 0, width, height);
+    }
   }
   
   void handleKey(int k) {
